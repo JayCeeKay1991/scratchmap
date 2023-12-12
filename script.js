@@ -167,7 +167,7 @@ class App {
       !validInputs(rating, duration) ||
       !allPositive(rating, duration)
     ) {
-      return alert('Inputs have to be positive numbers!');
+      return alert('Please add a duration for this trip.');
     }
 
     if (type === 'solo') trip = new Solo([lat, lng], start, rating, duration, persons, checkedPersons);
