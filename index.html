@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" type="image/png" href="/icon.png" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- added this from leaflet -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      defer
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <script defer src="script.js"></script>
+    <title>🌎 Trips Trips Trips</title>
+  </head>
+  <body>
+    <div class="sidebar">
+      <p class="globe">🌍</p>
+      <h1>Technotriolade around the world 💜💙🤎💚</h1><br><br>
+
+      <ul class="trips">
+        <form class="form hidden">
+          <div class="form__row form__row--start">
+            <label class="form__label" for="start">Start</label>
+            <input class="form__input form__input--start" type="date" id="start" name="start">
+          </div>
+
+        <form class="form hidden">
+          <div class="form__row form__row--type">
+            <label class="form__label">Type</label>
+            <select class="form__input form__input--type">
+              <option value="solo">Solo</option>
+              <option value="social">Social</option>
+            </select>
+          </div>
+
+          <form class="form hidden">
+            <div class="form__row form__row--rating">
+              <label class="form__label">Rating</label>
+              <select class="form__input form__input--rating">
+                <option value=1>⭐️</option>
+                <option value=2>⭐️⭐️</option>
+                <option value=3>⭐️⭐️⭐️</option>
+                <option value=4>⭐️⭐️⭐️⭐️</option>
+                <option value=5>⭐️⭐️⭐️⭐️⭐️</option>
+              </select>
+            </div>
+
+            <div class="form__row form__row--duration">
+              <label class="form__label">Duration</label>
+              <input
+              class="form__input form__input--duration"
+              placeholder="weeks"
+              />
+            </div>
+
+          <div class="form__row form__row--persons">
+            <label class="form__label">Travelers</label>
+            <section class="form__input form__checkboxes form__input--persons">
+              <input type="checkbox" id="person1" name="person" value="Sventjer" text="Sventjer">
+              <label for="person1"> Sventjer</label><br>
+              <input type="checkbox" id="person2"  name="person" value="Alexandär">
+              <label for="person2"> Alexandär</label><br>
+
+              <input type="checkbox" id="person3" name="person" value="Johanner">
+              <label for="person3"> Johanner</label><br>
+
+              <input type="checkbox" id="person4" name="person" value="Luner">
+              <label for="person4"> Luner</label><br>
+
+              <input type="checkbox" id="person5" name="person" value="Others">
+              <label for="person5"> Others</label><br>
+            </section>
+          </div>
+
+
+          <button class="form__btn">OK</button>
+        </form>
+      </ul>
+      <button class="btn hidden" onclick="clearLocalStorage()">Clear Local Storage</button>
+
+      <p class="footer">With 💚 for Alex & Sventjer
+      </p>
+    </div>
+
+    <div id="map"></div>
+  </body>
+</html>

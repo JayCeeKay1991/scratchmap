@@ -1,0 +1,270 @@
+:root {
+  --color-brand--1: rgb(121, 7, 170);
+  --color-brand--2: rgb(0, 157, 248);
+  --color-button-hover: rgb(40, 172, 248);
+
+  --color-dark--1: #232335;
+  --color-dark--2: #3e4d5a;
+  --color-light--1: #aaa;
+  --color-light--2: #ececec;
+  --color-light--3: rgb(213, 218, 221);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  color: var(--color-light--2);
+  font-weight: 400;
+  line-height: 1.6;
+  height: 100vh;
+  overscroll-behavior-y: none;
+  background-color: #fff;
+  padding: 2.5rem;
+  display: flex;
+}
+
+/* GENERAL */
+a:link,
+a:visited {
+  color: var(--color-brand--1);
+}
+
+/* SIDEBAR */
+.sidebar {
+  flex-basis: 50rem;
+  background-color: var(--color-dark--1);
+  padding: 3rem 5rem 4rem 5rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+.globe {
+  align-self: center;
+  font-size: 50px;
+}
+
+.trips {
+  list-style: none;
+  height: 77vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.trips::-webkit-scrollbar {
+  width: 0;
+}
+
+.trip {
+  background-color: var(--color-dark--2);
+  border-radius: 5px;
+  padding: 1.5rem 2.25rem;
+  margin-bottom: 1.75rem;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem 1.5rem;
+}
+.trip--solo {
+  border-left: 5px solid var(--color-brand--2);
+}
+.trip--social {
+  border-left: 5px solid var(--color-brand--1);
+}
+
+.trip__title {
+  font-size: 1.7rem;
+  font-weight: 600;
+  grid-column: 1 / -1;
+}
+
+.trip__details {
+  display: flex;
+  align-items: baseline;
+}
+
+.trip__icon {
+  font-size: 1.8rem;
+  margin-right: 0.5rem;
+  height: 0.28rem;
+}
+
+.trip__value {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.trip__unit {
+  font-size: 1.1rem;
+  color: var(--color-light--1);
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.form {
+  background-color: var(--color-dark--2);
+  border-radius: 5px;
+  padding: 3rem 1.5rem;
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-areas:
+  'start persons'
+  'type persons'
+  'duration persons'
+  'rating persons';
+  gap: 0.2rem 1.5rem;
+  /* Match height and activity boxes */
+  height: 25rem;
+  transition: all 0.5s, transform 1ms;
+  align-items: start;
+}
+
+.form.hidden {
+  transform: translateY(-30rem);
+  height: 0;
+  padding: 0 2.25rem;
+  margin-bottom: 0;
+  opacity: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.form__row {
+  display: flex;
+  align-items: center;
+}
+
+.form__row--start {
+  grid-area: start;
+}
+
+.form__row--type {
+  grid-area: type;
+}
+
+.form__row--persons {
+  grid-area: persons;
+}
+
+.form__row--duration {
+  grid-area: duration;
+}
+
+.form__row--rating {
+  grid-area: rating;
+}
+
+.form__label {
+  flex: 0 0 50%;
+  font-size: 1.5rem;
+  font-weight: 600;
+  align-self: start;
+}
+
+.form__input {
+  width: 100%;
+  padding: 0.3rem 0.5rem;
+  font-family: inherit;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 3px;
+  background-color: var(--color-light--3);
+  transition: all 0.2s;
+}
+
+
+.form__checkboxes {
+  padding: 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  color: #2d3439;
+  display: inline-block;
+  width: 13rem;
+}
+
+.form__input:focus {
+  outline: none;
+  background-color: #fff;
+}
+
+.form__btn {
+  background-color: var(--color-brand--2);
+  border: white;
+  border-radius: 3px;
+  width: 10rem;
+  height: 3rem;
+  position: relative;
+  left: 15rem;
+  bottom: -15px;
+  color: #fff;
+  font: inherit;
+}
+
+.form__btn:hover {
+  background-color: var(--color-button-hover);
+}
+
+.footer {
+  align-self: center;
+}
+
+.copyright {
+  margin-top: auto;
+  font-size: 1.3rem;
+  text-align: center;
+  color: var(--color-light--1);
+}
+
+.twitter-link:link,
+.twitter-link:visited {
+  color: var(--color-light--1);
+  transition: all 0.2s;
+}
+
+.twitter-link:hover,
+.twitter-link:active {
+  color: var(--color-light--2);
+}
+
+/* MAP */
+#map {
+  flex: 1;
+  height: 100%;
+  background-color: var(--color-light--1);
+  border-radius: 5px;
+}
+
+/* Popup width is defined in JS using options */
+.leaflet-popup .leaflet-popup-content-wrapper {
+  background-color: var(--color-dark--1);
+  color: var(--color-light--2);
+  border-radius: 5px;
+  padding-right: 0.6rem;
+}
+
+.leaflet-popup .leaflet-popup-content {
+  font-size: 1.5rem;
+}
+
+.leaflet-popup .leaflet-popup-tip {
+  background-color: var(--color-dark--1);
+}
+
+.solo-popup .leaflet-popup-content-wrapper {
+  border-left: 5px solid var(--color-brand--2);
+}
+.social-popup .leaflet-popup-content-wrapper {
+  border-left: 5px solid var(--color-brand--1);
+}
