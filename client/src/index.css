@@ -1,4 +1,29 @@
 :root {
-  --theme-blue: rgb(27, 175, 255);
+  --theme-blue: rgb(0, 157, 248);
   --theme-purple: rgb(123, 10, 97);
+  --theme-blue-hover: rgb(40, 172, 248);
+  --theme-grey-dark: #232335;
+  --theme-grey-medium: #3e4d5a;
+  --theme-grey-light: #aaa;
+  --theme-grey-super-light: #ececec;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  height: 100vh;
+  background-color: var(--theme-grey-super-light);
+  padding: 2.5rem;
 }

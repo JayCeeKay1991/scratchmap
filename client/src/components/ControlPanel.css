@@ -1,0 +1,7 @@
+#panel-wrap {
+  color: var(--theme-grey-super-light);
+  background-color: var(--theme-grey-dark);
+  height: 100%;
+  width: 35%;
+  border-radius: 10px;
+}

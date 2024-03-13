@@ -1,9 +1,14 @@
-import { useState } from 'react'
-import './App.css'
+import React, { useState } from 'react'
+import './App.css';
+import ControlPanel from './ControlPanel';
+import { MapContainer } from 'react-leaflet';
 
-export const App = () => {
+const App = () => {
   return (
-    <div>Hello World</div>
+    <div id="app-wrap" >
+    <ControlPanel/>
+    <MapContainer/>
+    </div>
   )
 }
 
