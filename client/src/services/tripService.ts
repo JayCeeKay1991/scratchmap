@@ -1,6 +1,7 @@
 import { TripType } from "../../../server/src/model";
 
-const rootUrl = `${import.meta.env.VITE_SERVER || 'http://localhost:3000'}/trips`;
+const rootUrl = `${/*import.meta.env.VITE_SERVER || */'http://localhost:3000'}/trips`;
+
 
 // get all trips from database
 export async function getAllTrips () {

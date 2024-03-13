@@ -1,4 +1,4 @@
-import '.TripList.css';
+import './TripList.css';
 import React, { useEffect, useState } from 'react';
 import { TripType } from '../../../server/src/model';
 import './TripItem.css';

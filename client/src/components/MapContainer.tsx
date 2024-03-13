@@ -1,7 +1,6 @@
 import React from "react";
-import { MapContainer, Marker, TileLayer } from "react-leaflet"
+import { MapContainer, TileLayer } from "react-leaflet"
 import './Map.css';
-import Map from "./Map";
 
 type MapContainerProps = {
  children: React.JSX.Element

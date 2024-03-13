@@ -1,4 +1,4 @@
-import '.TripList.css';
+import './TripList.css';
 import React, { useEffect, useState } from 'react';
 import { TripType } from '../../../server/src/model';
 import { getAllTrips } from '../services/tripService';
@@ -18,12 +18,11 @@ const TripList = ():React.JSX.Element => {
   return (
     <div id="trip-list-wrap" >
       {
-        tripList.map((trip) => <TripItem trip={trip} ></TripItem>)
+        tripList && tripList.length ? tripList.map((trip) => <TripItem trip={trip} ></TripItem>) :
+        <h3>No trips yet.</h3>
       }
     </div>
-
   )
-
 }
 
 export default TripList;
