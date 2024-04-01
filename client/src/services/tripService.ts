@@ -10,9 +10,10 @@ export async function getAllTrips () {
     method: 'GET'
   })
   const data = await response.json();
-  return data;
+  if (data) return data;
+  else console.log('No data found.')
   } catch (error) {
-    console.log(error);
+    console.error(error);
 }};
 
 
@@ -27,7 +28,8 @@ export async function postTrip (body:Partial<TripType>) {
     body: JSON.stringify(body),
   })
   const data = await response.json();
-  return data;
+  if (data) return data;
+  else console.log('No data found.')
   } catch (error) {
-    console.log(error);
+    console.error(error);
 }};

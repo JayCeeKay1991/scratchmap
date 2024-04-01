@@ -1,20 +1,25 @@
+import './MapContainer.css';
+import { LatLngTuple } from "leaflet";
 import React from "react";
-import { MapContainer, TileLayer } from "react-leaflet"
-import './Map.css';
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
+import 'leaflet/dist/leaflet.css';
+import MapEffect from './MapEffect';
 
 type MapContainerProps = {
- children: React.JSX.Element
+ children: React.ReactNode,
+ center: LatLngTuple,
+ zoom: number,
 }
 
-const MapContainerComp = ({children}:MapContainerProps) => {
+const MapContainerComp = ({center, zoom, children}:MapContainerProps) => {
+
   return (
-    <MapContainer>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      ></TileLayer>
-      {children}
-    </MapContainer>
+    <div id='map-wrap' >
+      <MapContainer id="map-container" center={center} zoom={zoom} >
+        <MapEffect />
+        {children}
+      </MapContainer>
+    </div>
   )
 }
 

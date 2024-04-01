@@ -19,7 +19,7 @@ const TripList = ():React.JSX.Element => {
     <div id="trip-list-wrap" >
       {
         tripList && tripList.length ? tripList.map((trip) => <TripItem trip={trip} ></TripItem>) :
-        <h3>No trips yet.</h3>
+        <p>No trips yet.</p>
       }
     </div>
   )

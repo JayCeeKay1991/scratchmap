@@ -23,7 +23,7 @@ export const postTrip = (req: Request, res: Response) => {
       res.status(201);
       res.send(newTrip);
     }
-    else res.send('No body in requests.')
+    else res.send('No body in request.')
   } catch (error) {
     console.error(error);
     res.status(500);

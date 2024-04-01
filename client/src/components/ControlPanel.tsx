@@ -9,6 +9,7 @@ const ControlPanel = () => {
     <div id="panel-wrap" >
     <h1>Trips Trips Trips 💜💙🤎💚</h1>
     <TripList/>
+    <p>Click the map to add a trip!</p>
     </div>
   )
 }

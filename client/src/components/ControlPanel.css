@@ -4,4 +4,10 @@
   height: 100%;
   width: 35%;
   border-radius: 10px;
+  text-align: center;
 }
+
+#panel-wrap h1 {
+  margin: 15px;
+}
+

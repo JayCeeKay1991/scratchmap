@@ -1,0 +1,10 @@
+#map-wrap {
+  width: 1000px;
+  height: 100%;
+}
+
+#map-container {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+}
