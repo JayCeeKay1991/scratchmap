@@ -5,9 +5,12 @@
   width: 35%;
   border-radius: 10px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 #panel-wrap h1 {
   margin: 15px;
 }
-

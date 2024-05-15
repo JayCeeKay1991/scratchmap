@@ -1,63 +1,79 @@
-import React, {useState, useEffect} from 'react'
-import './App.css';
-import ControlPanel from './ControlPanel';
-import MapContainerComp from './MapContainer';
-import { TileLayer, Marker, useMapEvents } from "react-leaflet"
-import { defaultLocationObj, defaultLocationTuple, fetchUserLocation } from '../services/locationService';
-import { LocationObj } from '../types/types';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import ControlPanel from "./ControlPanel";
+import MapContainerComp from "./MapContainer";
+import { TileLayer, Marker, useMapEvents } from "react-leaflet";
+import {
+  defaultLocationObj,
+  defaultLocationTuple,
+  fetchUserLocation,
+} from "../services/locationService";
+import MapEffect from "./MapEffect";
+import { getAllTrips } from "../services/tripService";
+import { Trip } from "../types/types";
+import { Location } from "../types/types";
 
 const App = () => {
-
-  const initialState = {
-    startDate: Date,
-    duration: 0,
-    travellers: [],
-    location: {}
-  }
-
   const [marker, setMarker] = useState(null);
   const [mapCenter, setMapCenter] = useState(defaultLocationTuple);
   const [location, setLocation] = useState(defaultLocationObj);
-  const [formValues, setFormValues] = useState(initialState);
-  const [imageFile, setImageFile] = useState(null);
-
-  // changes in the form
-  function changeHandler(e) {
-    const { name, value, type, files } = e.target;
-    if (type === 'file') {
-      setImageFile(files[0]); // Set the image file
-    } else setFormValues({ ...formValues, [name]: value });
-  }
-
-  // choosing a location by clicking on the map
-  function handleLocationSelect (location:LocationObj) {
-    setFormValues((prev) => ({ ...prev, location }));
-  };
-
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
+    null
+  );
+  const [showAddForm, setShowAddForm] = useState(false);
 
   // set the map center to the current location
   useEffect(() => {
     const getLocationAndSet = async () => {
       await fetchUserLocation(setLocation);
       setMapCenter([location.lat, location.lng]);
-    }
-    getLocationAndSet()
-  },
-  []);
+    };
+    getLocationAndSet();
+  }, []);
 
+  const [tripList, setTripList] = useState<Trip[]>([]);
+
+  useEffect(() => {
+    async function fetchAndSet() {
+      const updatedTrips = await getAllTrips();
+      setTripList(updatedTrips);
+    }
+    fetchAndSet();
+  });
+
+  useEffect(() => {
+    console.log("📍", selectedLocation);
+  }, [selectedLocation]);
 
   return (
-    <div id="app-wrap" >
-      <ControlPanel/>
-      <MapContainerComp zoom={10} center={mapCenter} >
+    <div id="app-wrap">
+      <ControlPanel
+        showAddForm={showAddForm}
+        list={tripList}
+        selectedLocation={selectedLocation}
+      />
+      <MapContainerComp zoom={5} center={mapCenter}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         ></TileLayer>
-        <Marker position={mapCenter}></Marker>
+        {tripList.length ? (
+          tripList.map((trip) => (
+            <Marker
+              key={trip._id}
+              position={trip.location?.coordinates || mapCenter}
+            ></Marker>
+          ))
+        ) : (
+          <></>
+        )}
+        <MapEffect
+          setSelectedLocation={setSelectedLocation}
+          setShowAddForm={setShowAddForm}
+        />
       </MapContainerComp>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

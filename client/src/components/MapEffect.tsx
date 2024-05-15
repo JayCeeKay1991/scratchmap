@@ -1,19 +1,27 @@
-import {useEffect} from 'react';
-import { useMap, useMapEvents } from 'react-leaflet';
+import { Dispatch, SetStateAction } from "react";
+import { useMapEvents } from "react-leaflet";
+import { Location } from "./../types/types";
 
-const MapEffect = () => {
-  const map = useMap();
+interface MapEffectPropType {
+  setSelectedLocation: Dispatch<SetStateAction<Location | null>>;
+  setShowAddForm: Dispatch<SetStateAction<boolean>>;
+}
 
-  useMapEvents({
+const MapEffect = ({
+  setSelectedLocation,
+  setShowAddForm,
+}: MapEffectPropType) => {
+  const map = useMapEvents({
     click: () => map.locate(),
     locationfound: (location) => {
-      console.log('location found:', location)
+      console.log("location found:", location);
+      setSelectedLocation({
+        type: "Point",
+        coordinates: [location.latlng.lng, location.latlng.lat],
+      });
+      setShowAddForm(true);
     },
-  })
-
-  useEffect(() => {
-    console.log('Using map! 🗺️');
-  }, [map]);
+  });
 
   return null;
 };

@@ -1,21 +1,35 @@
-import './TripList.css';
-import React, { useEffect, useState } from 'react';
-import { TripType } from '../../../server/src/model';
-import './TripItem.css';
+import "./TripList.css";
+import React, { useEffect, useState } from "react";
+import { Trip } from "./../types/types";
+import "./TripItem.css";
 
 interface TripPropType {
-  trip: TripType
+  trip: Trip;
 }
 
-const TripItem = ({trip}:TripPropType):React.JSX.Element => {
-
+const TripItem = ({ trip }: TripPropType): React.JSX.Element => {
   return (
-    <div id="trip-item-wrap" >
-      <h3>Trip item</h3>
-      <p>{trip.duration} days</p>
-    </div>
-  )
-
-}
+    <>
+      <div id="trip-item-wrap">
+        <h3>
+          Trip to{" "}
+          {trip.location ? trip.location.coordinates : "secret location"}
+        </h3>
+        <h4>with {trip.travellers.join(",")}</h4>
+        <p>
+          {trip.startDate
+            ? trip.startDate.getFullYear()
+            : "No date information"}
+        </p>
+        <p>{trip.duration} days</p>
+        <p>{"⭐️".repeat(trip.rating)}</p>
+        <div id="trip-buttons">
+          <button id="edit">...</button>
+          <button id="delete">x</button>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default TripItem;

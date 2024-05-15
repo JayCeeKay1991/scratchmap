@@ -1,10 +1,15 @@
-import mongoose, {InferSchemaType} from 'mongoose';
-import config from '../setup/config';
+import mongoose, { InferSchemaType } from "mongoose";
+import config from "./setup/config";
 
-async () => {
-  await mongoose.connect(`${config.dbUrl}/${config.dbName}`);
-  console.log('Connected to database!🚀');
+async function main() {
+  try {
+    await mongoose.connect(`${config.dbUrl}/${config.dbName}`);
+    console.log("Connected to database!🚀");
+  } catch (error) {
+    console.error("🔥 Error in the database connection:", error);
+  }
 }
+main();
 
 const tripSchema = new mongoose.Schema({
   startDate: Date,
@@ -13,21 +18,19 @@ const tripSchema = new mongoose.Schema({
   location: {
     type: {
       type: String,
-      enum: ['Point'],
-      required: true
+      enum: ["Point"],
+      required: true,
     },
     coordinates: {
       type: [Number], // [lng, lat]
-      required: true
-    }
+      required: true,
+    },
   },
-  rating: Number
-})
+  rating: Number,
+});
 
+tripSchema.index({ location: "2dsphere" });
 
-tripSchema.index({ location: '2dsphere' });
-
-export type TripType = InferSchemaType<typeof tripSchema>;
-const Trip = mongoose.model('trips', tripSchema);
+const Trip = mongoose.model("trips", tripSchema);
 
 export default Trip;

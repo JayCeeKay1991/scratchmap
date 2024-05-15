@@ -5,7 +5,7 @@ export type LocationObj = {
 
 export type LocationTuple = [lat: number, lng: number];
 
-export type Location = {
+type Location = {
   type: string;
   coordinates: LocationTuple;
 };

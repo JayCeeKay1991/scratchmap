@@ -1,0 +1,10 @@
+#add-form-wrap {
+  width: 90%;
+  border: solid 1px white;
+  color: var(--theme-grey-medium);
+  background-color: var(--theme-grey-super-light);
+  position: relative;
+  text-align: left;
+  padding: 10px;
+  border-radius: 2px;
+}
