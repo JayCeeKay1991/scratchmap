@@ -1,4 +1,3 @@
-import "./TripList.css";
 import React, { useEffect, useState } from "react";
 import { Trip } from "./../types/types";
 import "./TripItem.css";

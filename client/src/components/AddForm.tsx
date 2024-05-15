@@ -32,12 +32,23 @@ const AddForm = ({ selectedLocation }: AddFormPropType) => {
   return (
     <form id="add-form-wrap">
       <h3>New trip to {selectedLocation?.coordinates}</h3>
+      <label>Duration in days</label>
+      <input type="number" name="duration"></input>
+      <label>Travellers</label>
+      <select
+        multiple={true}
+        value={["Sventjer", "Alex", "Luner", "Jay"]}
+      ></select>
+      <label>Rating</label>
+      <select>
+        <option value="1">⭐️</option>
+        <option value="2">⭐️⭐️</option>
+        <option value="3">⭐️⭐️⭐️</option>
+        <option value="4">⭐️⭐️⭐️⭐️</option>
+        <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
+      </select>
 
-      <input type="number" name="duration" placeholder="duration"></input>
-
-      <input type="number" name="duration" placeholder="duration"></input>
-
-      <input type="number" name="rating" placeholder="rating"></input>
+      <input id="submit-add-form" type="submit" value="Submit"></input>
     </form>
   );
 };

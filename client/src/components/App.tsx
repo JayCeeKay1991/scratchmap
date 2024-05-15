@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import ControlPanel from "./ControlPanel";
 import MapContainerComp from "./MapContainer";
-import { TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { TileLayer, Marker, useMapEvents, Popup } from "react-leaflet";
 import {
   defaultLocationObj,
   defaultLocationTuple,
@@ -62,7 +62,16 @@ const App = () => {
             <Marker
               key={trip._id}
               position={trip.location?.coordinates || mapCenter}
-            ></Marker>
+              eventHandlers={{
+                click: () => {
+                  console.log("marker clicked");
+                },
+              }}
+            >
+              <Popup>
+                {trip.rating} <br /> {trip.duration}
+              </Popup>
+            </Marker>
           ))
         ) : (
           <></>
