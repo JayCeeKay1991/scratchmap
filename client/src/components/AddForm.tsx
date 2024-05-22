@@ -1,54 +1,143 @@
-import React, { useState } from "react";
-import { Location } from "../types/types";
+import React, { useState, Dispatch, SetStateAction } from "react";
+import { Location, Trip } from "../types/types";
 import "./AddForm.css";
+import { postTrip } from "../services/tripService";
 
 interface AddFormPropType {
   selectedLocation: Location | null;
+  selectedAddress: string | null;
+  setTripList: Dispatch<SetStateAction<Trip[]>>;
 }
 
-const AddForm = ({ selectedLocation }: AddFormPropType) => {
+const AddForm = ({
+  selectedLocation,
+  selectedAddress,
+  setTripList,
+}: AddFormPropType) => {
   const initialFormState = {
-    startDate: Date,
+    startDate: new Date(),
     duration: 0,
     travellers: [],
-    location: {},
+    rating: 0,
+    location: selectedLocation,
+    address: selectedAddress,
   };
   const [formValues, setFormValues] = useState(initialFormState);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [selectedTravellers, setSelectedTravellers] = useState<string[]>([]);
+  const [selectedRating, setSelectedRating] = useState(0);
 
   // changes in the form
   function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value, type, files } = e.target;
     if (type === "file" && files) {
       setImageFile(files[0]); // Set the image file
-    } else setFormValues({ ...formValues, [name]: value });
+    } else {
+      setFormValues({
+        ...formValues,
+        [name]: type === "number" ? Number(value) : value,
+      });
+    }
   }
 
-  // choosing a location by clicking on the map
-  function handleLocationSelect(location: Location) {
-    setFormValues((prev) => ({ ...prev, location }));
-  }
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    setSelectedTravellers((prev) =>
+      checked
+        ? [...prev, value]
+        : prev.filter((traveller) => traveller !== value)
+    );
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (selectedLocation && formValues.startDate && formValues.travellers) {
+      const newTripData = {
+        ...formValues,
+        travellers: selectedTravellers,
+        rating: selectedRating,
+        imageFile,
+        location: {
+          type: "Point",
+          coordinates: [
+            selectedLocation.coordinates[1],
+            selectedLocation.coordinates[0],
+          ],
+        },
+        address: selectedAddress || "Unknown address",
+      };
+      try {
+        const newTrip = await postTrip(newTripData);
+        setTripList((prev) => [...prev, newTrip]);
+        setFormValues(initialFormState);
+        setImageFile(null);
+      } catch (error) {}
+    }
+  };
 
   return (
-    <form id="add-form-wrap">
-      <h3>New trip to {selectedLocation?.coordinates}</h3>
-      <label>Duration in days</label>
-      <input type="number" name="duration"></input>
-      <label>Travellers</label>
-      <select
-        multiple={true}
-        value={["Sventjer", "Alex", "Luner", "Jay"]}
-      ></select>
-      <label>Rating</label>
-      <select>
-        <option value="1">⭐️</option>
-        <option value="2">⭐️⭐️</option>
-        <option value="3">⭐️⭐️⭐️</option>
-        <option value="4">⭐️⭐️⭐️⭐️</option>
-        <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
-      </select>
+    <form id="add-form-wrap" onSubmit={handleSubmit}>
+      <h3>New trip to {selectedAddress}</h3>
+      <div id="form-input-fields">
+        <label>Start</label>
+        <input type="date" name="startDate" onChange={changeHandler}></input>
+        <label>Duration in days</label>
+        <input type="number" name="duration" onChange={changeHandler} />
 
-      <input id="submit-add-form" type="submit" value="Submit"></input>
+        <label>Rating</label>
+        <select
+          value={selectedRating}
+          onChange={(e) => {
+            setSelectedRating(Number(e.target.value));
+            console.log("⭐️", selectedRating);
+          }}
+        >
+          <option value={1}>⭐️</option>
+          <option value={2}>⭐️⭐️</option>
+          <option value={3}>⭐️⭐️⭐️</option>
+          <option value={4}>⭐️⭐️⭐️⭐️</option>
+          <option value={5}>⭐️⭐️⭐️⭐️⭐️</option>
+        </select>
+
+        <label>Travellers</label>
+        <div id="traveller-input">
+          <label>
+            <input
+              type="checkbox"
+              value="Sventjer"
+              onChange={handleCheckboxChange}
+            />
+            Sventjer
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Alex"
+              onChange={handleCheckboxChange}
+            />
+            Alex
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Luner"
+              onChange={handleCheckboxChange}
+            />
+            Luner
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Jay"
+              onChange={handleCheckboxChange}
+            />
+            Jay
+          </label>
+        </div>
+      </div>
+
+      <input id="submit-add-form" type="submit" value="Submit" />
     </form>
   );
 };

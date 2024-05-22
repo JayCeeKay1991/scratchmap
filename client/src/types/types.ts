@@ -3,7 +3,7 @@ export type LocationObj = {
   lng: number;
 };
 
-export type LocationTuple = [lat: number, lng: number];
+export type LocationTuple = number[];
 
 export type Location = {
   type: string;
@@ -12,6 +12,7 @@ export type Location = {
 
 export type Trip = {
   _id: string;
+  address: string;
   startDate: Date;
   duration: number;
   location: Location;

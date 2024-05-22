@@ -1,17 +1,7 @@
-import { LatLngTuple } from "leaflet";
-
-// Berlin as a fallback
-export const defaultLocationObj = {
-  lat: 52.507389,
-  lng: 13.378096
-}
-export const defaultLocationTuple: LatLngTuple = [
-  52.507389, 13.378096
-]
-
-export function fetchUserLocation(setLocation: (location: {lat: number, lng: number}) => void) {
+export function fetchUserLocation(
+  setLocation: (location: { lat: number; lng: number }) => void
+) {
   if ("geolocation" in navigator) {
-    //console.log('Here!', navigator);
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
@@ -20,11 +10,11 @@ export function fetchUserLocation(setLocation: (location: {lat: number, lng: num
       },
       (error) => {
         console.error("Error getting location: ", error);
-        setLocation(defaultLocationObj);
+        setLocation({ lat: 0, lng: 0 });
       }
     );
   } else {
     console.log("Geolocation is not supported by this browser.");
-    setLocation(defaultLocationObj);
+    setLocation({ lat: 0, lng: 0 });
   }
 }

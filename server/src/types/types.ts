@@ -3,9 +3,9 @@ export type LocationObj = {
   lng: number;
 };
 
-export type LocationTuple = [lat: number, lng: number];
+export type LocationTuple = number[];
 
-type Location = {
+export type Location = {
   type: string;
   coordinates: LocationTuple;
 };
@@ -15,6 +15,7 @@ export type Trip = {
   startDate: Date;
   duration: number;
   location: Location;
+  address: string;
   rating: number;
   image: string;
   travellers: string[];

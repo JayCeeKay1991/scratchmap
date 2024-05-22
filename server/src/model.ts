@@ -22,10 +22,11 @@ const tripSchema = new mongoose.Schema({
       required: true,
     },
     coordinates: {
-      type: [Number], // [lng, lat]
+      type: [Number],
       required: true,
     },
   },
+  address: String,
   rating: Number,
 });
 

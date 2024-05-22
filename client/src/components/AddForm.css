@@ -10,6 +10,14 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  height: 290px;
+}
+
+#form-input-fields {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 140px;
 }
 
 #submit-add-form {
@@ -23,7 +31,20 @@
   margin-top: 10px;
 }
 
+form input,
+select {
+  width: fit-content;
+}
+
 select:focus,
 input:focus {
   outline: none;
+}
+
+#traveller-input {
+  display: flex;
+  flex-direction: column;
+}
+#traveller-input input {
+  margin-right: 5px;
 }
