@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Trip } from "./../types/types";
 import "./TripItem.css";
 import moment from "moment";
@@ -10,6 +10,8 @@ interface TripPropType {
 }
 
 const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+
   let country;
   if (trip) {
     const addressArray = trip.address?.split(",");
@@ -41,12 +43,31 @@ const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
         <p>{trip.duration} days</p>
         <p>{`${"⭐️".repeat(trip.rating)}`}</p>
         <div id="trip-buttons">
-          <button id="edit">...</button>
-          <button id="delete" onClick={handleDelete}>
-            x
+          <button id="edit">✏️</button>
+          <button
+            id="delete"
+            onClick={() => setShowConfirmDelete(!showConfirmDelete)}
+          >
+            🗑️
           </button>
         </div>
       </div>
+      {showConfirmDelete ? (
+        <div id="confirm-delete">
+          <p>Are you sure you want to delete this trip? 🥲</p>
+          <button id="confirm-delete" onClick={handleDelete}>
+            ☑️
+          </button>
+          <button
+            id="cancel-delete"
+            onClick={() => setShowConfirmDelete(false)}
+          >
+            ✖️
+          </button>
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

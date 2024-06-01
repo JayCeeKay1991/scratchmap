@@ -6,6 +6,7 @@ import TripItem from "./TripItem";
 
 type ControlPanelProps = {
   showAddForm: boolean;
+  setShowAddForm: Dispatch<SetStateAction<boolean>>;
   list: Trip[];
   setTripList: Dispatch<SetStateAction<Trip[]>>;
   selectedLocation: Location | null;
@@ -14,6 +15,7 @@ type ControlPanelProps = {
 
 const ControlPanel: React.FC<ControlPanelProps> = ({
   showAddForm,
+  setShowAddForm,
   setTripList,
   list,
   selectedLocation,
@@ -27,6 +29,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
           selectedLocation={selectedLocation}
           selectedAddress={selectedAddress}
           setTripList={setTripList}
+          setShowAddForm={setShowAddForm}
         />
       ) : (
         "Click the map to add a trip!"

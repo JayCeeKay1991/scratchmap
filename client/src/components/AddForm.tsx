@@ -2,17 +2,21 @@ import React, { useState, Dispatch, SetStateAction } from "react";
 import { Location, Trip } from "../types/types";
 import "./AddForm.css";
 import { postTrip } from "../services/tripService";
+import { AiFillCloseCircle } from "react-icons/ai";
+import { postImageToCloudinary } from "../services/tripService";
 
 interface AddFormPropType {
   selectedLocation: Location | null;
   selectedAddress: string | null;
   setTripList: Dispatch<SetStateAction<Trip[]>>;
+  setShowAddForm: Dispatch<SetStateAction<boolean>>;
 }
 
 const AddForm = ({
   selectedLocation,
   selectedAddress,
   setTripList,
+  setShowAddForm,
 }: AddFormPropType) => {
   const initialFormState = {
     startDate: new Date(),
@@ -52,12 +56,24 @@ const AddForm = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    let imageUrl = "";
+    if (imageFile) {
+      try {
+        imageUrl = await postImageToCloudinary({
+          file: imageFile,
+          upload_preset: "nwjjpdw",
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     if (selectedLocation && formValues.startDate && formValues.travellers) {
       const newTripData = {
         ...formValues,
         travellers: selectedTravellers,
         rating: selectedRating,
-        imageFile,
+        imageFile: imageUrl,
         location: {
           type: "Point",
           coordinates: [
@@ -65,13 +81,14 @@ const AddForm = ({
             selectedLocation.coordinates[0],
           ],
         },
-        address: selectedAddress || "Unknown address",
+        address: selectedAddress || "",
       };
       try {
         const newTrip = await postTrip(newTripData);
         setTripList((prev) => [...prev, newTrip]);
         setFormValues(initialFormState);
         setImageFile(null);
+        setShowAddForm(false);
       } catch (error) {}
     }
   };
@@ -99,6 +116,14 @@ const AddForm = ({
           <option value={4}>⭐️⭐️⭐️⭐️</option>
           <option value={5}>⭐️⭐️⭐️⭐️⭐️</option>
         </select>
+
+        <label>Image</label>
+        <input
+          id="upload-button"
+          name="image"
+          type="file"
+          onChange={(e) => changeHandler}
+        ></input>
 
         <label>Travellers</label>
         <div id="traveller-input">
@@ -138,6 +163,12 @@ const AddForm = ({
       </div>
 
       <input id="submit-add-form" type="submit" value="Submit" />
+      <button id="cancel-add" onClick={() => setShowAddForm(false)}>
+        <AiFillCloseCircle
+          color="var(--theme-grey-medium)"
+          size={25}
+        ></AiFillCloseCircle>
+      </button>
     </form>
   );
 };

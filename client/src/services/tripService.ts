@@ -4,6 +4,9 @@ const rootUrl = `${
   /*import.meta.env.VITE_SERVER || */ "http://localhost:3003"
 }/trips`;
 
+const cloudinaryCloudname = import.meta.env.VITE_CLOUDINARY_CLOUDNAME;
+const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${cloudinaryCloudname}/image/upload`;
+
 // get all trips from database
 export async function getAllTrips() {
   try {
@@ -48,5 +51,22 @@ export async function deleteTrip(id: string) {
     return response;
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function postImageToCloudinary(body: {
+  file: File;
+  upload_preset: string;
+}): Promise<string> {
+  try {
+    const response = await fetch(cloudinaryUrl, {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+    const data = await response.json();
+    return data.secure_url;
+  } catch (error) {
+    console.log(error);
+    throw new Error("error posting image");
   }
 }

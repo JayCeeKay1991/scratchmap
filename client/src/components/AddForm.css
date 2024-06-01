@@ -10,14 +10,14 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  height: 290px;
+  height: 320px;
 }
 
 #form-input-fields {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  height: 140px;
+  height: 180px;
 }
 
 #submit-add-form {
@@ -47,4 +47,14 @@ input:focus {
 }
 #traveller-input input {
   margin-right: 5px;
+}
+
+#cancel-add {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  height: 30px;
+  width: 30px;
+  border: none;
+  cursor: pointer;
 }

@@ -30,6 +30,7 @@ const App = () => {
     <div id="app-wrap">
       <ControlPanel
         showAddForm={showAddForm}
+        setShowAddForm={setShowAddForm}
         list={tripList}
         setTripList={setTripList}
         selectedLocation={selectedLocation}
