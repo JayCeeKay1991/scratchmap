@@ -73,7 +73,7 @@ const AddForm = ({
         ...formValues,
         travellers: selectedTravellers,
         rating: selectedRating,
-        imageFile: imageUrl,
+        image: imageUrl,
         location: {
           type: "Point",
           coordinates: [

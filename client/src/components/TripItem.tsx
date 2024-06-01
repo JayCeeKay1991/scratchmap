@@ -33,25 +33,29 @@ const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
   return (
     <>
       <div id="trip-item-wrap">
-        <h3>Trip to {trip ? country : "secret location"}</h3>
-        <h4>with {trip.travellers.join(", ")}</h4>
-        <p>
-          {trip.startDate
-            ? `${moment(trip.startDate).format("MMM YYYY")}`
-            : "No date information"}
-        </p>
-        <p>{trip.duration} days</p>
-        <p>{`${"⭐️".repeat(trip.rating)}`}</p>
-        <div id="trip-buttons">
-          <button id="edit">✏️</button>
-          <button
-            id="delete"
-            onClick={() => setShowConfirmDelete(!showConfirmDelete)}
-          >
-            🗑️
-          </button>
+        <div id="trip-info">
+          <h3>Trip to {trip ? country : "secret location"}</h3>
+          <h4>with {trip.travellers.join(", ")}</h4>
+          <p>
+            {trip.startDate
+              ? `${moment(trip.startDate).format("MMM YYYY")}`
+              : "No date information"}
+          </p>
+          <p>{trip.duration} days</p>
+          <p>{`${"⭐️".repeat(trip.rating)}`}</p>
+          <div id="trip-buttons">
+            <button id="edit">✏️</button>
+            <button
+              id="delete"
+              onClick={() => setShowConfirmDelete(!showConfirmDelete)}
+            >
+              🗑️
+            </button>
+          </div>
         </div>
+        {trip.image ? <img id="trip-image" src={trip.image}></img> : <></>}
       </div>
+
       {showConfirmDelete ? (
         <div id="confirm-delete">
           <p>Are you sure you want to delete this trip? 🥲</p>

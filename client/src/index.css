@@ -26,4 +26,7 @@ body {
   height: 100vh;
   background-color: var(--theme-grey-super-light);
   padding: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
