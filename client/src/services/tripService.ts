@@ -1,7 +1,7 @@
 import { Trip } from "../types/types";
 
 const rootUrl = `${
-  /*import.meta.env.VITE_SERVER || */ "http://localhost:3003"
+  import.meta.env.VITE_SERVER || "http://localhost:3003"
 }/trips`;
 
 const cloudinaryCloudname = import.meta.env.VITE_CLOUDINARY_CLOUDNAME;
@@ -54,6 +54,7 @@ export async function deleteTrip(id: string) {
   }
 }
 
+// upload trip image to cloudinart and return url
 export async function postImageToCloudinary(body: {
   file: File;
   upload_preset: string;

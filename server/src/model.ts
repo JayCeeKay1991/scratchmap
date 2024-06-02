@@ -1,4 +1,4 @@
-import mongoose, { InferSchemaType } from "mongoose";
+import mongoose from "mongoose";
 import config from "./setup/config";
 
 async function main() {
@@ -10,6 +10,11 @@ async function main() {
   }
 }
 main();
+
+const userSchema = new mongoose.Schema({
+  name: String,
+  password: String,
+});
 
 const tripSchema = new mongoose.Schema({
   startDate: Date,
@@ -33,5 +38,6 @@ const tripSchema = new mongoose.Schema({
 tripSchema.index({ location: "2dsphere" });
 
 const Trip = mongoose.model("trips", tripSchema);
+const User = mongoose.model("users", userSchema);
 
-export default Trip;
+export { Trip, User };

@@ -20,3 +20,8 @@ export type Trip = {
   image: string;
   travellers: string[];
 };
+
+export type User = {
+  name: string;
+  password: string;
+};

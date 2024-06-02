@@ -42,8 +42,15 @@ declare module "vite/client" {
     readonly MODE: string;
     readonly DEV: boolean;
     readonly PROD: boolean;
+    readonly VITE_CLOUDINARY_CONFIG: {
+      cloud_name: string;
+      api_key: string;
+      api_secret: string;
+    };
+    readonly VITE_CLOUDINARY_CLOUDNAME: string;
+    readonly VITE_SERVER: string;
     // More env variables can be added here, depending on your `.env` file
     // e.g., readonly VITE_SOME_API_KEY: string;
-    [key: string]: string | boolean | undefined;
+    [key: string]: string | boolean | undefined | {};
   }
 }
