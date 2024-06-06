@@ -48,6 +48,14 @@ export async function deleteTrip(id: string) {
         "Content-Type": "application/json",
       },
     });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `HTTP error! status: ${response.status}, response: ${errorText}`
+      );
+    }
+
     return response;
   } catch (error) {
     console.error(error);

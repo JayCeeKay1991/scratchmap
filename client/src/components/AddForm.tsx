@@ -36,9 +36,8 @@ const AddForm = ({
   // changes in the form
   function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value, type, files } = e.target;
-    console.log("Change handler, all files:", files);
+
     if (type === "file" && files) {
-      console.log("Change handler, file:", files[0]);
       setImageFile(files[0]);
     } else {
       setFormValues({

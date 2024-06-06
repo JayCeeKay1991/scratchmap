@@ -19,7 +19,7 @@
 
 #list-wrap {
   width: 100%;
-  max-height: 80%;
+
   margin-bottom: 50px;
   display: flex;
   flex-direction: column;

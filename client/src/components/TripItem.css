@@ -1,5 +1,4 @@
 #trip-item-wrap {
-  border: solid 1px white;
   color: var(--theme-grey-medium);
   background-color: var(--theme-grey-super-light);
   position: relative;
@@ -7,7 +6,7 @@
   padding: 10px;
   border-radius: 2px;
   width: 90%;
-  height: 180px;
+  height: 160px;
 }
 
 #trip-buttons {
@@ -45,4 +44,31 @@
   width: 70px;
   border-radius: 70px;
   object-fit: cover;
+}
+
+#edit-form {
+  color: var(--theme-grey-medium);
+  background-color: var(--theme-grey-super-light);
+  width: 90%;
+  margin-top: -15px;
+  padding: 10px;
+}
+
+#edit-input {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 180px;
+  text-align: left;
+  align-items: flex-start;
+}
+
+#submit-edit-form {
+  width: 80px;
+  height: 30px;
+  align-self: center;
+  color: white;
+  background-color: var(--theme-grey-medium);
+  border-radius: 3px;
+  border: none;
 }
