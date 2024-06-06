@@ -60,14 +60,23 @@ export async function postImageToCloudinary(body: {
   upload_preset: string;
 }): Promise<string> {
   try {
+    const formData = new FormData();
+    formData.append("file", body.file);
+    formData.append("upload_preset", body.upload_preset);
+
     const response = await fetch(cloudinaryUrl, {
       method: "POST",
-      body: JSON.stringify(body),
+      body: formData,
     });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
     return data.secure_url;
   } catch (error) {
     console.log(error);
-    throw new Error("error posting image");
+    throw new Error("Error posting image");
   }
 }

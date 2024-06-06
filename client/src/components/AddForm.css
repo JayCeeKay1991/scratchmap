@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  height: 320px;
+  height: 100%;
 }
 
 #form-input-fields {
@@ -18,6 +18,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   height: 180px;
+  width: 250px;
 }
 
 #submit-add-form {
@@ -29,10 +30,20 @@
   border-radius: 3px;
   border: none;
   margin-top: 10px;
+  position: absolute;
+  bottom: 30px;
+}
+
+#upload-button {
+  border-radius: 0;
+  height: 35px;
 }
 
 form input,
 select {
+  border: none;
+  height: 20px;
+  border-radius: 10px;
   width: fit-content;
 }
 
@@ -56,5 +67,7 @@ input:focus {
   height: 30px;
   width: 30px;
   border: none;
+  outline: none;
   cursor: pointer;
+  border-radius: 20px;
 }

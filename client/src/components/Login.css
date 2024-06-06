@@ -14,7 +14,7 @@ h1 {
   font-weight: 300;
 }
 
-form {
+#login-wrap form {
   display: flex;
   flex-direction: column;
   width: 90%;
@@ -22,7 +22,7 @@ form {
   padding: 10px 0;
 }
 
-input {
+#login-wrap input {
   border-radius: 30px;
   height: 40px;
   margin: 5px;

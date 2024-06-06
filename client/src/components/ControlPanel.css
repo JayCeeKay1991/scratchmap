@@ -10,10 +10,22 @@
   align-items: center;
   gap: 20px;
   font-size: 13px;
+  overflow: hidden;
 }
 
 #panel-wrap h1 {
   margin: 15px;
+}
+
+#list-wrap {
+  width: 100%;
+  max-height: 80%;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  overflow: scroll;
 }
 
 #footer {

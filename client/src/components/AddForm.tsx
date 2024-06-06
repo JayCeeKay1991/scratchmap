@@ -4,6 +4,7 @@ import "./AddForm.css";
 import { postTrip } from "../services/tripService";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { postImageToCloudinary } from "../services/tripService";
+const cloudinaryPreset = import.meta.env.VITE_CLOUDINARY_PRESET;
 
 interface AddFormPropType {
   selectedLocation: Location | null;
@@ -25,6 +26,7 @@ const AddForm = ({
     rating: 0,
     location: selectedLocation,
     address: selectedAddress,
+    image: "",
   };
   const [formValues, setFormValues] = useState(initialFormState);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -34,8 +36,10 @@ const AddForm = ({
   // changes in the form
   function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value, type, files } = e.target;
+    console.log("Change handler, all files:", files);
     if (type === "file" && files) {
-      setImageFile(files[0]); // Set the image file
+      console.log("Change handler, file:", files[0]);
+      setImageFile(files[0]);
     } else {
       setFormValues({
         ...formValues,
@@ -61,7 +65,7 @@ const AddForm = ({
       try {
         imageUrl = await postImageToCloudinary({
           file: imageFile,
-          upload_preset: "nwjjpdw",
+          upload_preset: cloudinaryPreset,
         });
       } catch (error) {
         console.error(error);
@@ -87,9 +91,11 @@ const AddForm = ({
         const newTrip = await postTrip(newTripData);
         setTripList((prev) => [...prev, newTrip]);
         setFormValues(initialFormState);
-        setImageFile(null);
         setShowAddForm(false);
-      } catch (error) {}
+        setImageFile(null);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -107,7 +113,6 @@ const AddForm = ({
           value={selectedRating}
           onChange={(e) => {
             setSelectedRating(Number(e.target.value));
-            console.log("⭐️", selectedRating);
           }}
         >
           <option value={1}>⭐️</option>
@@ -122,7 +127,7 @@ const AddForm = ({
           id="upload-button"
           name="image"
           type="file"
-          onChange={(e) => changeHandler}
+          onChange={changeHandler}
         ></input>
 
         <label>Travellers</label>

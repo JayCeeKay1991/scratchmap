@@ -5,7 +5,7 @@ import Login from "./Login";
 const Root = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  return loggedIn ? <Login></Login> : <App></App>;
+  return !loggedIn ? <Login setLoggedIn={setLoggedIn}></Login> : <App></App>;
 };
 
 export default Root;

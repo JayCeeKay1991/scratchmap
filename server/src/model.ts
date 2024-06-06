@@ -33,6 +33,7 @@ const tripSchema = new mongoose.Schema({
   },
   address: String,
   rating: Number,
+  image: String,
 });
 
 tripSchema.index({ location: "2dsphere" });

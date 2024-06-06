@@ -34,17 +34,19 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
       ) : (
         "Click the map to add a trip!"
       )}
-      {list && list.length ? (
-        list.map((trip) => (
-          <TripItem
-            trip={trip}
-            setTripList={setTripList}
-            key={trip._id}
-          ></TripItem>
-        ))
-      ) : (
-        <p>No trips yet.</p>
-      )}
+      <div id="list-wrap">
+        {list && list.length ? (
+          list.map((trip) => (
+            <TripItem
+              trip={trip}
+              setTripList={setTripList}
+              key={trip._id}
+            ></TripItem>
+          ))
+        ) : (
+          <p>No trips yet.</p>
+        )}
+      </div>
       <p id="footer">For my besties.</p>
     </div>
   );

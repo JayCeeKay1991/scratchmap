@@ -25,7 +25,7 @@ const App = () => {
       setTripList(updatedTrips);
     }
     fetchAndSet();
-  }, [tripList]);
+  }, []);
 
   return (
     <>
@@ -54,14 +54,14 @@ const App = () => {
               >
                 <Popup>
                   {moment(trip.startDate).format("MMM YYYY")} <br />{" "}
-                  {`${trip.duration} days`}
+                  {`${trip.duration} days with ${trip.travellers.join(", ")}`}
                 </Popup>
               </Marker>
             ))
           ) : (
             <></>
           )}
-          {selectedLocation ? (
+          {selectedLocation && showAddForm ? (
             <Marker
               position={[
                 selectedLocation.coordinates[0],
