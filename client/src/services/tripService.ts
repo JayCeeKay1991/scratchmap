@@ -39,6 +39,30 @@ export async function postTrip(body: Partial<Trip>) {
   }
 }
 
+export async function editTrip(id: string, body: Partial<Trip>) {
+  try {
+    const response = await fetch(`${rootUrl}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `HTTP error! status: ${response.status}, response: ${errorText}`
+      );
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error updating trip:", error);
+    return null;
+  }
+}
+
 // delete a trip from list
 export async function deleteTrip(id: string) {
   try {

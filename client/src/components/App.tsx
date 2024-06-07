@@ -43,21 +43,25 @@ const App = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           ></TileLayer>
-          {tripList.length ? (
-            tripList.map((trip) => (
-              <Marker
-                key={trip._id + "a"}
-                position={[
-                  trip.location?.coordinates[1],
-                  trip.location?.coordinates[0],
-                ]}
-              >
-                <Popup>
-                  {moment(trip.startDate).format("MMM YYYY")} <br />{" "}
-                  {`${trip.duration} days with ${trip.travellers.join(", ")}`}
-                </Popup>
-              </Marker>
-            ))
+          {tripList && tripList.length ? (
+            tripList.map((trip) =>
+              trip.location ? (
+                <Marker
+                  key={trip._id + "a"}
+                  position={[
+                    trip.location?.coordinates[1],
+                    trip.location?.coordinates[0],
+                  ]}
+                >
+                  <Popup>
+                    {moment(trip.startDate).format("MMM YYYY")} <br />{" "}
+                    {`${trip.duration} days with ${trip.travellers.join(", ")}`}
+                  </Popup>
+                </Marker>
+              ) : (
+                <></>
+              )
+            )
           ) : (
             <></>
           )}

@@ -47,8 +47,16 @@ export const postTrip = async (req: Request, res: Response) => {
 
 export const editTrip = async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
-    const { startDate, duration, rating, location, travellers } = req.body;
+    const id = req.params.tripId;
+    const {
+      startDate,
+      duration,
+      rating,
+      travellers,
+      image,
+      location,
+      address,
+    } = req.body;
     const updatedTrip = await Trip.findOneAndUpdate(
       { _id: id },
       {
@@ -56,18 +64,23 @@ export const editTrip = async (req: Request, res: Response) => {
           startDate: startDate,
           duration: duration,
           rating: rating,
-          location: location,
           travellers: travellers,
+          image: image,
+          location: location,
+          address: address,
         },
       },
       { new: true }
     );
-    res.status(201);
-    res.send(updatedTrip);
+
+    if (!updatedTrip) {
+      return res.status(404).send({ message: "Trip not found" });
+    }
+
+    res.status(200).json(updatedTrip);
   } catch (error) {
     console.error(error);
-    res.status(500);
-    res.send({
+    res.status(500).send({
       message:
         "An unexpected error occurred while editing the item. Please try again later.",
     });

@@ -1,8 +1,16 @@
-import React, { Dispatch, SetStateAction, useState, useEffect } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useState,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 import { Trip } from "./../types/types";
 import "./TripItem.css";
 import moment from "moment";
-import { deleteTrip } from "../services/tripService";
+import { deleteTrip, editTrip } from "../services/tripService";
+import { postImageToCloudinary } from "../services/tripService";
+const cloudinaryPreset = import.meta.env.VITE_CLOUDINARY_PRESET;
 
 interface TripPropType {
   trip: Trip;
@@ -35,23 +43,30 @@ const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
   };
 
   const initialFormState = {
-    startDate: trip.startDate,
+    startDate: moment(new Date(trip.startDate)).format("YYYY-MM-DD"),
     duration: trip.duration,
     travellers: trip.travellers,
     rating: trip.rating,
-    image: "",
+    image: trip.image,
+    location: trip.location,
+    address: trip.address,
   };
 
   const [formValues, setFormValues] = useState(initialFormState);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [selectedTravellers, setSelectedTravellers] = useState<string[]>([]);
-  const [selectedRating, setSelectedRating] = useState(0);
 
   function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value, type, files } = e.target;
+    const { name, value, type, checked, files } = e.target;
 
     if (type === "file" && files) {
       setImageFile(files[0]);
+    } else if (type === "checkbox") {
+      setFormValues((prevValues) => {
+        const newTravellers = checked
+          ? [...prevValues.travellers, value]
+          : prevValues.travellers.filter((traveller) => traveller !== value);
+        return { ...prevValues, travellers: newTravellers };
+      });
     } else {
       setFormValues({
         ...formValues,
@@ -60,18 +75,40 @@ const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
     }
   }
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.target;
-    setSelectedTravellers((prev) =>
-      checked
-        ? [...prev, value]
-        : prev.filter((traveller) => traveller !== value)
-    );
-  };
+  const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    let imageUrl = "";
+    if (imageFile) {
+      try {
+        imageUrl = await postImageToCloudinary({
+          file: imageFile,
+          upload_preset: cloudinaryPreset,
+        });
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
+    const newTrip = {
+      ...formValues,
+      image: imageUrl || formValues.image,
+      travellers: formValues.travellers,
+      startDate: new Date(formValues.startDate),
+    };
 
-  const handleEdit = async () => {
     try {
-    } catch (error) {}
+      const updatedTrip = await editTrip(trip._id, newTrip);
+      if (updatedTrip) {
+        setTripList((list) =>
+          list.map((elem) => (elem._id === trip._id ? updatedTrip : elem))
+        );
+        setFormValues(initialFormState);
+        setShowEdit(false);
+      } else {
+        console.error("Failed to update trip");
+      }
+    } catch (error) {
+      console.error("Error editing trip:", error);
+    }
   };
 
   return (
@@ -158,8 +195,8 @@ const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
                 <input
                   type="checkbox"
                   value="Sventjer"
-                  onChange={handleCheckboxChange}
-                  checked={selectedTravellers.includes("Sventjer")}
+                  onChange={changeHandler}
+                  checked={formValues.travellers.includes("Sventjer")}
                 />
                 Sventjer
               </label>
@@ -167,8 +204,8 @@ const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
                 <input
                   type="checkbox"
                   value="Alex"
-                  onChange={handleCheckboxChange}
-                  checked={selectedTravellers.includes("Alex")}
+                  onChange={changeHandler}
+                  checked={formValues.travellers.includes("Alex")}
                 />
                 Alex
               </label>
@@ -176,8 +213,8 @@ const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
                 <input
                   type="checkbox"
                   value="Luner"
-                  onChange={handleCheckboxChange}
-                  checked={selectedTravellers.includes("Luner")}
+                  onChange={changeHandler}
+                  checked={formValues.travellers.includes("Luner")}
                 />
                 Luner
               </label>
@@ -185,8 +222,8 @@ const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
                 <input
                   type="checkbox"
                   value="Jay"
-                  onChange={handleCheckboxChange}
-                  checked={selectedTravellers.includes("Jay")}
+                  onChange={changeHandler}
+                  checked={formValues.travellers.includes("Jay")}
                 />
                 Jay
               </label>
