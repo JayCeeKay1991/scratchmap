@@ -22,6 +22,7 @@ const Login = ({ setLoggedIn }: LoginPropsType) => {
   const navigate = useNavigate();
 
   const [formValues, setFormValues] = useState<FormValues>(initialState);
+  const [loginFailed, setLoginFailed] = useState(false);
 
   function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -34,13 +35,25 @@ const Login = ({ setLoggedIn }: LoginPropsType) => {
     async function logInAndSet(formValues: FormValues) {
       const { name, password } = formValues;
       const loginData = { name, password };
-      if (name && password) {
-        const loggedInUser = await login(loginData);
-      }
 
-      setFormValues(initialState);
-      setLoggedIn(true);
-      navigate("/home");
+      if (name && password) {
+        try {
+          const loggedInUser = await login(loginData);
+          if (loggedInUser) {
+            setFormValues(initialState);
+            setLoggedIn(true);
+            navigate("/home");
+            setLoginFailed(false);
+          } else {
+            setLoginFailed(true);
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+          setLoginFailed(true);
+        }
+      } else {
+        setLoginFailed(true);
+      }
     }
     logInAndSet(formValues);
   };
@@ -48,13 +61,21 @@ const Login = ({ setLoggedIn }: LoginPropsType) => {
   return (
     <section id="login-wrap">
       <h1>Hi 😍</h1>
+      {loginFailed ? <p>Wrong credentials!</p> : <></>}
       <form onSubmit={handleLogin}>
-        <input type="name" placeholder="name" onChange={changeHandler}></input>
+        <input
+          type="name"
+          name="name"
+          placeholder="name"
+          onChange={changeHandler}
+        ></input>
         <input
           type="password"
+          name="password"
           placeholder="password"
           onChange={changeHandler}
         ></input>
+
         <button type="submit" id="login-button">
           <FaArrowAltCircleRight size={30}></FaArrowAltCircleRight>
         </button>

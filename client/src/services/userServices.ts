@@ -7,7 +7,7 @@ const rootUrl = `${
 
 export async function login(body: FormValues): Promise<User> {
   try {
-    const response = await fetch(`${rootUrl}/login`, {
+    const response = await fetch(`${rootUrl}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
