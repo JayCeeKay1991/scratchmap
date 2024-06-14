@@ -185,7 +185,6 @@ const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
               id="upload-button"
               name="image"
               type="file"
-              value={formValues.image}
               onChange={changeHandler}
             ></input>
 
