@@ -1,13 +1,11 @@
 import { FormValues } from "../components/Login";
 import { User } from "../types/types";
 
-const rootUrl = `${
-  import.meta.env.VITE_SERVER || "http://localhost:3003"
-}/login`;
+const rootUrl = `${import.meta.env.VITE_SERVER || "http://localhost:3001"}`;
 
 export async function login(body: FormValues): Promise<User> {
   try {
-    const response = await fetch(`${rootUrl}`, {
+    const response = await fetch(`${rootUrl}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,7 +15,24 @@ export async function login(body: FormValues): Promise<User> {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("error logging in");
+  }
+}
+
+export async function signup(body: FormValues): Promise<User> {
+  try {
+    const response = await fetch(`${rootUrl}/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("error signing up");
   }
 }

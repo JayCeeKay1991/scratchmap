@@ -134,34 +134,34 @@ const AddForm = ({
           <label>
             <input
               type="checkbox"
-              value="Sventjer"
+              value="Solo trip"
               onChange={handleCheckboxChange}
             />
-            Sventjer
+            Solo trip
           </label>
           <label>
             <input
               type="checkbox"
-              value="Alex"
+              value="+ 1"
               onChange={handleCheckboxChange}
             />
-            Alex
+            + 1
           </label>
           <label>
             <input
               type="checkbox"
-              value="Luner"
+              value="With friends"
               onChange={handleCheckboxChange}
             />
-            Luner
+            With friends
           </label>
           <label>
             <input
               type="checkbox"
-              value="Jay"
+              value="With family"
               onChange={handleCheckboxChange}
             />
-            Jay
+            With family
           </label>
         </div>
       </div>

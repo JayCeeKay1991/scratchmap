@@ -13,13 +13,21 @@
   overflow: hidden;
 }
 
-#panel-wrap h1 {
-  margin: 15px;
+#logo-wrap {
+  margin: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+#logo-wrap img {
+  height: 30px;
 }
 
 #list-wrap {
   width: 100%;
-
   margin-bottom: 50px;
   display: flex;
   flex-direction: column;

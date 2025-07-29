@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   width: 400px;
-  padding: 30px 10px;
+  padding: 2rem;
   border-radius: 15px;
   background-color: var(--theme-grey-dark);
   color: var(--theme-grey-super-light);
@@ -12,11 +13,13 @@
 
 h1 {
   font-weight: 300;
+  font-size: large;
 }
 
 #login-wrap form {
   display: flex;
   flex-direction: column;
+  gap: 5px;
   width: 90%;
   margin: 30px;
   padding: 10px 0;
@@ -24,6 +27,7 @@ h1 {
 
 #login-wrap input {
   border-radius: 30px;
+  width: 100%;
   height: 40px;
   margin: 5px;
   border: none;
@@ -31,15 +35,15 @@ h1 {
   outline: none;
 }
 
-#login-button {
-  margin-top: 20px;
-  padding: 11px;
+#login-signup-button {
+  padding: 1rem;
+  margin-top: 2rem;
   height: 55px;
   border-radius: 30px;
   width: 30%;
   align-self: center;
   border: none;
-  font-size: larger;
+  font-size: medium;
   color: var(--theme-grey-super-light);
   background-color: var(--theme-grey-medium);
   text-align: center;

@@ -23,7 +23,10 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
 }) => {
   return (
     <div id="panel-wrap">
-      <h1>Trips Trips Trips 💜💙🤎💚</h1>
+      <div id="logo-wrap">
+        <img src="./logo.png"></img>
+        <h1>ScratchMap</h1>
+      </div>
       {showAddForm === true ? (
         <AddForm
           selectedLocation={selectedLocation}

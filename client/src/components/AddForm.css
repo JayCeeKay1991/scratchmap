@@ -18,7 +18,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   height: 180px;
-  width: 250px;
+  width: 200px;
 }
 
 #submit-add-form {
@@ -55,9 +55,12 @@ input:focus {
 #traveller-input {
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
-#traveller-input input {
-  margin-right: 5px;
+
+#traveller-input label {
+  display: flex;
+  gap: 5px;
 }
 
 #cancel-add {

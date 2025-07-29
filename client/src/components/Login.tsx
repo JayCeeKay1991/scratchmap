@@ -1,7 +1,6 @@
 import React, { useState, Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaArrowAltCircleRight } from "react-icons/fa";
-import { login } from "../services/userServices";
+import { login, signup } from "../services/userServices";
 import "./Login.css";
 
 export type FormValues = {
@@ -23,11 +22,42 @@ const Login = ({ setLoggedIn }: LoginPropsType) => {
 
   const [formValues, setFormValues] = useState<FormValues>(initialState);
   const [loginFailed, setLoginFailed] = useState(false);
+  const [signupFailed, setSignupFailed] = useState(false);
+  const [loginorSignUp, setLoginOrSignup] = useState("login");
 
   function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   }
+
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    async function signUpAndSet(formValues: FormValues) {
+      const { name, password } = formValues;
+      const signupData = { name, password };
+
+      if (name && password) {
+        try {
+          const loggedInUser = await signup(signupData);
+          if (loggedInUser) {
+            setFormValues(initialState);
+            setLoggedIn(true);
+            navigate("/home");
+            setSignupFailed(false);
+          } else {
+            setSignupFailed(true);
+          }
+        } catch (error) {
+          console.error("Signup error:", error);
+          setSignupFailed(true);
+        }
+      } else {
+        setSignupFailed(true);
+      }
+    }
+    signUpAndSet(formValues);
+  };
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -60,9 +90,15 @@ const Login = ({ setLoggedIn }: LoginPropsType) => {
 
   return (
     <section id="login-wrap">
-      <h1>Hi 😍</h1>
-      {loginFailed ? <p>Wrong credentials!</p> : <></>}
-      <form onSubmit={handleLogin}>
+      <h1>Welcome back!</h1>
+      {loginFailed ? (
+        <p>Wrong credentials!</p>
+      ) : signupFailed ? (
+        <p>Could not sign up.</p>
+      ) : (
+        <></>
+      )}
+      <form onSubmit={loginorSignUp === "login" ? handleLogin : handleSignup}>
         <input
           type="name"
           name="name"
@@ -76,9 +112,17 @@ const Login = ({ setLoggedIn }: LoginPropsType) => {
           onChange={changeHandler}
         ></input>
 
-        <button type="submit" id="login-button">
-          <FaArrowAltCircleRight size={30}></FaArrowAltCircleRight>
+        <button type="submit" id="login-signup-button">
+          {loginorSignUp === "login" ? "Login" : "Sign up"}
         </button>
+        <a
+          onClick={() =>
+            setLoginOrSignup(loginorSignUp === "login" ? "signup" : "login")
+          }
+          id="login-signup-anchor"
+        >
+          ... or {loginorSignUp === "login" ? "sign up" : "log in"}
+        </a>
       </form>
     </section>
   );

@@ -34,7 +34,7 @@ const MapEffect = ({
       if (response.data && response.data.display_name) {
         setAddress(response.data.display_name);
       } else {
-        console.log("Address not found");
+        console.error("Address not found");
       }
     },
   });

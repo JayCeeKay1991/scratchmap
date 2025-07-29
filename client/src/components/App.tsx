@@ -40,7 +40,7 @@ const App = () => {
       setTripList(updatedTrips);
     }
     fetchAndSet();
-  }, []);
+  }, [tripList]);
 
   return (
     <>

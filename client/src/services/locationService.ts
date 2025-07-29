@@ -5,16 +5,16 @@ export function fetchUserLocation(
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        //console.log('🦋', latitude, longitude);
         setLocation({ lat: latitude, lng: longitude });
       },
       (error) => {
-        console.error("Error getting location: ", error);
+        console.error(error);
+        throw new Error("Error getting location");
         setLocation({ lat: 0, lng: 0 });
       }
     );
   } else {
-    console.log("Geolocation is not supported by this browser.");
     setLocation({ lat: 0, lng: 0 });
+    throw new Error("Geolocation is not supported by this browser.");
   }
 }

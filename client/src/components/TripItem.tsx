@@ -29,16 +29,13 @@ const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
 
   const handleDelete = async () => {
     try {
-      console.log("Deleting trip with id:", trip._id);
       await deleteTrip(trip._id);
-      console.log("Trip deleted");
       setTripList((prev) => {
         const newList = prev.filter((elem) => elem._id !== trip._id);
-        console.log("Updated trip list:", newList);
         return newList;
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -116,7 +113,7 @@ const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
       <div id="trip-item-wrap">
         <div id="trip-info">
           <h3>Trip to {trip ? country : "secret location"}</h3>
-          <h4>with {trip.travellers.join(", ")}</h4>
+          <h4>{trip.travellers.join(", ")}</h4>
           <p>
             {trip.startDate
               ? `${moment(trip.startDate).format("MMM YYYY")}`
@@ -193,38 +190,38 @@ const TripItem = ({ trip, setTripList }: TripPropType): React.JSX.Element => {
               <label>
                 <input
                   type="checkbox"
-                  value="Sventjer"
+                  value="Solo trip"
                   onChange={changeHandler}
-                  checked={formValues.travellers.includes("Sventjer")}
+                  checked={formValues.travellers.includes("Solo trip")}
                 />
-                Sventjer
+                Solo trip
               </label>
               <label>
                 <input
                   type="checkbox"
-                  value="Alex"
+                  value="+ 1"
                   onChange={changeHandler}
-                  checked={formValues.travellers.includes("Alex")}
+                  checked={formValues.travellers.includes("+ 1")}
                 />
-                Alex
+                + 1
               </label>
               <label>
                 <input
                   type="checkbox"
-                  value="Luner"
+                  value="With friends"
                   onChange={changeHandler}
-                  checked={formValues.travellers.includes("Luner")}
+                  checked={formValues.travellers.includes("With friends")}
                 />
-                Luner
+                With friends
               </label>
               <label>
                 <input
                   type="checkbox"
-                  value="Jay"
+                  value="With family"
                   onChange={changeHandler}
-                  checked={formValues.travellers.includes("Jay")}
+                  checked={formValues.travellers.includes("With family")}
                 />
-                Jay
+                With family
               </label>
             </div>
           </div>

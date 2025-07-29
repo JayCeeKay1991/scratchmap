@@ -1,7 +1,7 @@
 import { Trip } from "../types/types";
 
 const rootUrl = `${
-  import.meta.env.VITE_SERVER || "http://localhost:3003"
+  import.meta.env.VITE_SERVER || "http://localhost:3001"
 }/trips`;
 
 const cloudinaryCloudname = import.meta.env.VITE_CLOUDINARY_CLOUDNAME;
@@ -15,9 +15,10 @@ export async function getAllTrips() {
     });
     const data = await response.json();
     if (data) return data;
-    else console.log("No data found.");
+    else console.error("No data found.");
   } catch (error) {
     console.error(error);
+    throw new Error("Error getting trips");
   }
 }
 
@@ -33,9 +34,10 @@ export async function postTrip(body: Partial<Trip>) {
     });
     const data = await response.json();
     if (data) return data;
-    else console.log("No data found.");
+    else console.error("No data found.");
   } catch (error) {
     console.error(error);
+    throw new Error("Error posting trip");
   }
 }
 
@@ -59,7 +61,7 @@ export async function editTrip(id: string, body: Partial<Trip>) {
     return data;
   } catch (error) {
     console.error("Error updating trip:", error);
-    return null;
+    throw new Error("Error updating trip");
   }
 }
 
@@ -83,6 +85,7 @@ export async function deleteTrip(id: string) {
     return response;
   } catch (error) {
     console.error(error);
+    return null;
   }
 }
 
@@ -108,7 +111,7 @@ export async function postImageToCloudinary(body: {
     const data = await response.json();
     return data.secure_url;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("Error posting image");
   }
 }
