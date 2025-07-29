@@ -1,4 +1,4 @@
-Scratchmap is a travel diary web app which allows the user to mark spots on a map and same information on the trip. 
+Scratchmap is a travel diary web app which allows the user to mark spots on a map and save information on the trip. 
 
 ## Getting started
 
